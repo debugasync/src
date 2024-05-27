@@ -1,29 +1,34 @@
+-- Define startUpArgs
 local startUpArgs = getgenv().startUpArgs or { 'universal', 'public' }
--- [[
-    --obleus remake
-    --ignore the shitty code
-    --made by Portal#4849
-    --LEAKED BY FIJI https://v3rmillion.net/showthread.php?tid=1208282
-    --edited by farzad | @fhws
---]]
 
+-- Load External Scripts with Debugging
 local drawing = loadstring(game:HttpGet("https://gist.githubusercontent.com/0f76/9dc85c8c380d895373dd306fd372fa59/raw/e2abc40c2b5f159d61b10558c86e4f98823e30f5/drawing_extension.lua"))()
+print("Drawing loaded:", drawing)
+
 local tween = loadstring(game:HttpGet("https://gist.githubusercontent.com/0f76/1661258383c3c320ac5af2c9dd923fd5/raw/ee3c79b95eafa3b732127a0a7d37a4dc43b3bd60/custom_tween.lua"))()
+print("Tween loaded:", tween)
+
 local decode = (getgenv().crypt and getgenv().crypt.base64.decode) or (crypt and crypt.base64decode) or base64_decode
+print("Decode function available:", decode ~= nil)
+
 local services = setmetatable({}, {
     __index = function(_, k)
         k = (k == "InputService" and "UserInputService") or k
         return game:GetService(k)
     end
 })
--- // Handler
+print("Services initialized")
+
+-- Handler
 local handler = {modules = {}}; do
     handler.createModule = function(moduleName, data)
-        local module = data or {};
-        handler.modules[moduleName] = module;
-        return module;
-    end;
-end;
+        local module = data or {}
+        handler.modules[moduleName] = module
+        return module
+    end
+end
+print("Handler initialized")
+
 -- // Utility
 local totalunnamedflags = 0;
 local utility = handler.createModule("Utility"); do
